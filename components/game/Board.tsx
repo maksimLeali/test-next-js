@@ -9,6 +9,7 @@ const Board: React.FC = () => {
   const player = useAtomValue(p);
   const [victory, setVictory] = useAtom(vic);
   const [computerPlaying, setComputerPlaying] = useState(false);
+  const [turn, setTurn] = useState<"x" | "o">("x");
   const board: TileType[][] = useMemo(
     () => [
       [undefined, undefined, undefined],
@@ -19,18 +20,22 @@ const Board: React.FC = () => {
   );
 
   useEffect(() => {
+    console.log('try reset')
+    const newTurn = 'x'
+    setTurn(newTurn)
     setVictory(undefined)
     board.map((row, i) => {
       board[i] = [undefined, undefined, undefined];
     });
-    if(turn != player){
+    console.log('player:', player, 'turn:', newTurn)
+    if(newTurn != player){
       setTimeout(()=>{
         computerTurn()
       }, 100)
     }
   }, [player, board]);
 
-  const [turn, setTurn] = useState<"x" | "o">("x");
+  
 
   const checkVictory = useCallback(() => {
     const checker = [0, 1, 2];

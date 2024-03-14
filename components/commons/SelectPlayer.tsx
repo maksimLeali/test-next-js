@@ -17,10 +17,12 @@ const SelectPlayer: React.FC<Props> = ({}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(ref, () => {
+    console.log('clicked outside')
     setOpen(false);
   });
 
   const selectPlayer = (pl: "x" | "o") => {
+    console.log('setting player', pl)
     setPlayer(pl);
     setOpen(false);
   };
@@ -28,9 +30,9 @@ const SelectPlayer: React.FC<Props> = ({}) => {
   return (
     <div className="w-full h-12 flex justify-center gap-10 items-center">
       <p>Gioca come</p>
-      <div className="relative w-[4rem] h-10 border rounded-md border-gray-600 ">
+      <div ref={ref} className="relative w-[4rem] h-10 border rounded-md border-gray-600 ">
         <div
-          ref={ref}
+          
           onClick={() => setOpen(!open)}
           className="w-full flex items-center"
         >
