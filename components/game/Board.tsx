@@ -23,6 +23,11 @@ const Board: React.FC = () => {
     board.map((row, i) => {
       board[i] = [undefined, undefined, undefined];
     });
+    if(turn != player){
+      setTimeout(()=>{
+        computerTurn()
+      }, 100)
+    }
   }, [player, board]);
 
   const [turn, setTurn] = useState<"x" | "o">("x");

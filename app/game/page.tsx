@@ -9,6 +9,7 @@ const GamePage: React.FC = () => {
 
   return (
     <div className="h-full flex px-4 justify-center items-center flex-col">
+      <p className="flex items-center mb-20">Parte sempre chi ha il simbolo <ImCross className="ml-2"/></p>
       <Board />
       <div className="flex items-center gap-x-3 h-10 ">
         {vic 
