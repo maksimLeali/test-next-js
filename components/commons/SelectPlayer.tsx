@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { RiRecordCircleFill } from "react-icons/ri";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useAtom } from "jotai";
 import { player as p } from "@/atoms/victory";
+
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+
 type Props = {};
 
 const SelectPlayer: React.FC<Props> = ({}) => {
   const [open, setOpen] = useState(false);
   const [player, setPlayer] = useAtom(p);
   const playerClass = "w-10 p-2 h-full border-r border-gray-600";
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(ref, () => {
+    setOpen(false);
+  });
 
   const selectPlayer = (pl: "x" | "o") => {
     setPlayer(pl);
@@ -21,6 +30,7 @@ const SelectPlayer: React.FC<Props> = ({}) => {
       <p>Gioca come</p>
       <div className="relative w-[4rem] h-10 border rounded-md border-gray-600 ">
         <div
+          ref={ref}
           onClick={() => setOpen(!open)}
           className="w-full flex items-center"
         >

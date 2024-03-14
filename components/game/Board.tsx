@@ -19,21 +19,17 @@ const Board: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log("player changed", player);
+    setVictory(undefined)
     board.map((row, i) => {
       board[i] = [undefined, undefined, undefined];
     });
   }, [player, board]);
 
-  console.log(board.length);
-  console.log(board.map((row) => row.length));
-
   const [turn, setTurn] = useState<"x" | "o">("x");
 
   const checkVictory = useCallback(() => {
     const checker = [0, 1, 2];
-    console.log("start check");
-    console.log(checker);
+    
     const conditions = [
       checker.some((rowIndex) =>
         checker.every((colIndex) => board[colIndex][rowIndex] == turn)
@@ -45,7 +41,7 @@ const Board: React.FC = () => {
       checker.every((rowIndex) => board[rowIndex][2 - rowIndex] == turn),
     ];
     const victory = conditions.some((value) => value);
-    console.log("victory ? ", victory);
+
     if (victory) {
       setVictory(turn);
     }
@@ -54,7 +50,7 @@ const Board: React.FC = () => {
   const handleTurn = useCallback(() => {
     checkVictory();
     const newTurn = turn == "x" ? "o" : "x";
-    console.log("new turn ", newTurn);
+    
     setTurn(newTurn);
 
    
@@ -126,7 +122,7 @@ const checkTie = useCallback(()=>{
 
   const handleClick = (rowIndex: number, colIndex: number) => {
     if (victory || board[rowIndex][colIndex]) return;
-    console.log(`clicked ${rowIndex} ${colIndex}`);
+    
     board[rowIndex][colIndex] = turn;
     handleTurn();
   };

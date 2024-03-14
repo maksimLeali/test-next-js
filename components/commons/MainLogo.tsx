@@ -3,10 +3,6 @@ import { useRef } from "react";
 
 const MainLogo: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  setTimeout(() => {
-    console.log(containerRef.current?.clientHeight);
-  }, 1000);
-
   return (
     <div ref={containerRef} className="w-full h-40">
         <Image
