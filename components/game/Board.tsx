@@ -80,11 +80,37 @@ const checkTie = useCallback(()=>{
 
 
 
-
-  const computerTurn = useCallback(() => {
-    console.log("computer turn");
-
-    // Find available tiles
+  const computerTurn = () => {    
+    const patternsToFill = [
+      [[0, 0], [0, 1], [0, 2]], 
+      [[1, 0], [1, 1], [1, 2]], 
+      [[2, 0], [2, 1], [2, 2]], 
+      [[0, 0], [1, 0], [2, 0]], 
+      [[0, 1], [1, 1], [2, 1]], 
+      [[0, 2], [1, 2], [2, 2]], 
+      [[0, 0], [1, 1], [2, 2]], 
+      [[0, 2], [1, 1], [2, 0]], 
+    ];
+  
+    for (const pattern of patternsToFill) {
+      const filledCount = pattern.reduce(
+        (count, [rowIndex, colIndex]) =>
+          count + (board[rowIndex][colIndex] === turn ? 1 : 0),
+        0
+      );
+      if (filledCount === 2) {
+        
+        const emptyTile = pattern.find(
+          ([rowIndex, colIndex]) => !board[rowIndex][colIndex]
+        );
+        if (emptyTile) {
+          const [rowIndex, colIndex] = emptyTile;
+          handleClick(rowIndex, colIndex); 
+          return;
+        }
+      }
+    }
+  
     const availableTiles: { rowIndex: number; colIndex: number }[] = [];
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
@@ -93,12 +119,10 @@ const checkTie = useCallback(()=>{
         }
       }
     }
-
     const randomIndex = Math.floor(Math.random() * availableTiles.length);
     const { rowIndex, colIndex } = availableTiles[randomIndex];
-
-    handleClick(rowIndex, colIndex);
-  }, [turn]);
+    handleClick(rowIndex, colIndex); 
+  };
 
   const handleClick = (rowIndex: number, colIndex: number) => {
     if (victory || board[rowIndex][colIndex]) return;
